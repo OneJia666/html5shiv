@@ -1,152 +1,118 @@
-＃HTML5 Shiv
+﻿The HTML5 Shiv
 
-HTML5 Shiv支持使用传统Internet Explorer中的HTML5分段元素，并为Internet Explorer 6-9，Safari 4.x（和iPhone 3.x）和Firefox 3.x提供基本的HTML5样式。
+The HTML5 Shiv enables use of HTML5 sectioning elements in legacy Internet Explorer and provides basic HTML5 styling for Internet Explorer 6-9, Safari 4.x (and iPhone 3.x), and Firefox 3.x.
 
-###这些文件是做什么的？
+What do these files do?
 
-####`html5shiv.js`
-*这包括基本的`createElement（）`shiv技术，以及针对IE6-8的`document.createElement`和`document.createDocumentFragment`的monkeypatches。它也适用于IE6-9，Safari 4.x和FF 3的HTML5元素[基本样式]（https://github.com/aFarkas/html5shiv/blob/51da98dabd3c537891b7fe6114633fb10de52473/src/html5shiv.js#L216-220）。 X。
+html5shiv.js
 
-####`html5shiv-printshiv.js` 
-*这包括以上所有内容，以及允许在IE 6-8中打印HTML5元素并包含子元素的机制。
+This includes the basic createElement() shiv technique, along with monkeypatches for document.createElement and document.createDocumentFragment. It also applies basic styling for HTML5 elements.
+####html5shiv-printshiv.js
 
-###现在谁可以生气？
+This includes all of the above, as well as a mechanism allowing HTML5 elements to be styled and contain children while being printed in IE 6-8.
+Who can I get mad at now?
 
-HTML5 Shiv由[Alexander Farkas]（https://github.com/aFarkas/），[Jonathan Neal]（https://twitter.com/jon_neal）和[Paul Irish]（https://twitter.com）维护/ paul_irish），有许多来自[John-David Dalton]（https://twitter.com/jdalton）的贡献。它也与[Modernizr]（http://modernizr.com/）分发。
+HTML5 Shiv is maintained by Alexander Farkas, Jonathan Neal and Paul Irish, with many contributions from John-David Dalton. It is also distributed with Modernizr, and the two google code projects, html5shiv and html5shim, maintained by Remy Sharp.
 
-如果您在这些实施中遇到任何问题，您可以在这里举报！:)
+If you have any issues in these implementations, you can report them here! :)
 
-有关HTML5 Shiv和所有参与制作的人的全文，请阅读[HTML5 Shiv的故事]（http://paulirish.com/2011/the-history-of-the-html5-shiv/） 。
+For the full story of HTML5 Shiv and all of the people involved in making it, read The Story of the HTML5 Shiv.
 
-##安装
+Installation
 
-###使用[Bower]（http://bower.io/）
+###Using Bower
 
-`bower安装html5shiv --save-dev`
+bower install html5shiv --save-dev
 
-这会将最新版本的HTML5 shiv克隆到项目根目录下的“bower_components”目录中，并创建或更新指定项目依赖关系的文件“bower.json”。
+This will clone the latest version of the HTML5 shiv into the components directory at the root of your project and also create or update the file bower.json which specifies your projects dependencies.
 
-将HTML5 shiv包含在页面的<head>中，在条件注释中以及任何样式表之后。
+Include the HTML5 shiv at the top of your <head> in a conditional comment before any stylesheets.
 
-```HTML
-<！ -  [if lt IE 9]>
-	<script src =“bower_components / html5shiv / dist / html5shiv.js”> </ script>
-<！[ENDIF]  - >
-```
+<!--[if lt IE 9]>
+	<script src="components/html5shiv/html5shiv.js"></script>
+<![endif]-->
+###Manual instalation
 
-###手动安装
-从这个版本库
-下载并提取[最新的zip包]（https://github.com/aFarkas/html5shiv/archive/master.zip），并复制dist / html5shiv.js和dist / html5shiv-printshiv这两个文件.js`到你的项目中。然后将其中的一个包含到你的`<head>`中。
+Download and extract the latest zip package from this repositiory and copy the two files dist/html5shiv.js and dist/html5shiv-printshiv.js into your project. Then include one of them into your <head> as above.
 
-## HTML5 Shiv API
+HTML5 Shiv API
 
-HTML5 Shiv是一个简单的插入式解决方案。在大多数情况下，不需要配置HTML5 Shiv或使用HTML5 Shiv提供的方法。
+HTML5 Shiv works as a simple drop-in solution. In most cases there is no need to configure HTML5 Shiv or use methods provided by HTML5 Shiv.
 
-###`html5.elements`选项
+html5.elements option
 
-`elements`选项是一个空格分隔的字符串或数组，它描述了shiv元素的** full **列表。另见`addElements`。
+The elements option is a space separated string or array, which describes the full list of the elements to shiv.
 
-**在包含`html5shiv.js`之前配置`elements` **
+Configuring elements before html5shiv.js is included.
 
-```JS
-//创建一个全局的html5选项对象
+//create a global html5 options object
 window.html5 = {
-  '元素'：'标识部分客户' 
+  'elements': 'mark section customelement' 
 };
-```
-**包含`html5shiv.js`后配置`elements` **
+Configuring elements after html5shiv.js is included.
 
-```JS
-//更改html5shiv选项对象 
-window.html5.elements ='标记栏目customelement';
-//并重新调用`shivDocument`方法
-html5.shivDocument（文件）;
-```
+//change the html5shiv options object 
+window.html5.elements = 'mark section customelement';
+//and re-invoke the `shivDocument` method
+html5.shivDocument(document);
+html5.shivCSS
 
-###`html5.shivCSS`
+If shivCSS is set to true HTML5 Shiv will add basic styles (mostly display: block) to sectioning elements (like section, article). In most cases a webpage author should include those basic styles in his normal stylesheet to ensure older browser support (i.e. Firefox 3.6) without JavaScript.
 
-如果`shivCSS`被设置为`true`，则HTML5 Shiv会将基本样式（主要是display：block）添加到截面元素（如section，article）中。在大多数情况下，网页作者应该在他的正常样式表中包含这些基本样式，以确保在没有JavaScript的情况下支持较旧的浏览器（即Firefox 3.6）。
+The shivCSS is true by default and can be set false, only before html5shiv.js is included:
 
-`shivCSS`默认是true，只有在包含html5shiv.js之前，才可以设置为false： 
-
-```JS
-//创建一个全局的html5选项对象
+//create a global html5 options object
 window.html5 = {
-	'shivCSS'：错误
+	'shivCSS': false
 };
-```
+html5.shivMethods
 
-###`html5.shivMethods`
+If the shivMethods option is set to true (by default) HTML5 Shiv will override document.createElement/document.createDocumentFragment in IE8- to allow dynamic DOM creation of HTML5 elements.
 
-如果`shivMethods`选项设置为true（默认），HTML5 Shiv将在Internet Explorer 6-8中重写`document.createElement` /`document.createDocumentFragment`，以允许动态DOM创建HTML5元素。 
+Known issue: If an element is created using the overridden createElement method this element returns a document fragment as its parentNode, but should be normally null. If a script relays on this behavior, shivMethodsshould be set to false. Note: jQuery 1.7+ has implemented his own HTML5 DOM creation fix for IE8-. If all your scripts (including Third party scripts) are using jQuery's manipulation and DOM creation methods, you might want to set this option to false.
 
-已知问题：如果使用重写的createElement方法创建元素，则此元素将返回文档片段作为其“parentNode”，但通常应为“null”。如果一个脚本依赖于这个行为，`shivMethods`应该被设置为`false`。
-注意：jQuery 1.7+为Internet Explorer 6-8实现了自己的HTML5 DOM创建修复程序。如果所有脚本（包括第三方脚本）都使用jQuery的操作和DOM创建方法，则可能需要将此选项设置为“false”。
+Configuring shivMethods before html5shiv.js is included.
 
-**在包含`html5shiv.js`之前配置`shivMethods` **
-
-```JS
-//创建一个全局的html5选项对象
+//create a global html5 options object
 window.html5 = {
-	'shivMethods'：假
+	'shivMethods': false
 };
-```
-**包含`html5shiv.js`后配置`elements` **
+Configuring elements after html5shiv.js is included.
 
-```JS
-//更改html5shiv选项对象 
+//change the html5shiv options object 
 window.html5.shivMethods = false;
-```
+html5.createElement( nodeName [, document] )
 
-###`html5.addElements（newElements [，document]）`
+The html5.createElement method creates a shived element, even if shivMethods is set to false.
 
-`html5.addElements`方法将元素列表扩展为shiv。newElements参数可以是空格分隔的列表或数组。
+var container = html5.createElement('div');
+//container is shived so we can add HTML5 elements using `innerHTML`
+container.innerHTML = '<section>This is a section</section>';
+html5.createDocumentFragment( [document] )
 
-```JS
-//将元素列表扩展为shiv
-html5.addElements（'element content'）;
-```
+The html5.createDocumentFragment method creates a shived document fragment, even if shivMethods is set to false.
 
-###`html5.createElement（nodeName [，document]）`
+var fragment = html5.createDocumentFragment();
+var container = document.createElement('div');
+fragment.appendChild(container);
+//fragment is shived so we can add HTML5 elements using `innerHTML`
+container.innerHTML = '<section>This is a section</section>';
+HTML5 Shiv Known Issues and Limitations
 
-即使`shivMethods`设置为false，`html5.createElement`方法也会创建一个shived元素。
+The shivMethods option (overriding document.createElement) and the html5.createElement method create elements, which are not disconnected and have a parentNode (see also issue #64)
+The cloneNode problem is currently not addressed by HTML5 Shiv. HTML5 elements can be dynamically created, but can't be cloned in all cases.
+The printshiv version of HTML5 Shiv has to alter the print styles and the whole DOM for printing. In case of complex websites and or a lot of print styles this might cause performance and/or styling issues. A possible solution could be the htc-branch of HTML5 Shiv, which uses another technique to implement print styles for IE8.
+What about the other HTML5 element projects?
 
-```JS
-var container = html5.createElement（'div'）;
-//容器被移动，所以我们可以使用`innerHTML`来添加HTML5元素
-container.innerHTML ='<section>这是一节</ section>';
-```
+The original conception and community collaboration story of the project is described at The History of the HTML5 Shiv.
+IEPP, by Jon Neal, addressed the printing fault of the original html5shiv. It was merged into html5shiv.
+Shimprove, in April 2010, patched cloneNode and createElement was later merged into html5shiv
+innerShiv, introduced in August 2010 by JD Barlett, addressed dynamically adding new HTML5 elements into the DOM. jQuery added support that made innerShiv redundant and html5shiv addressed the same issues as well, so the project was completed.
+The html5shim and html5shiv sites on Google Code are maintained by Remy Sharp and are identical distribution points of this html5shiv project.
+Modernizr is developed by the same people as html5shiv and can include the latest version in any custom builds created at modernizr.com
+This html5shiv repo now contains tests for all the edge cases pursued by the above libraries and has been extensively tested, both in development and production.
+A detailed changelog of html5shiv is available.
 
-###`html5.createDocumentFragment（[document]）`
+Why is it called a shiv?
 
-即使`shivMethods`设置为false，`html5.createDocumentFragment`方法也会创建一个shived文档片段。
-
-```JS
-var fragment = html5.createDocumentFragment（）;
-var container = document.createElement（'div'）;
-fragment.appendChild（容器）;
-//片段被移动，所以我们可以使用`innerHTML`来添加HTML5元素
-container.innerHTML ='<section>这是一节</ section>';
-```
-
-## HTML5 Shiv已知问题和限制
-
-- `shivMethods`选项（覆盖`document.createElement`）和`html5.createElement`方法创建元素，这些元素没有断开连接并有一个父节点（参见问题＃64）
-- 克隆节点问题目前还没有被HTML5 Shiv解决。HTML5元素可以动态创建，但不能在所有情况下克隆。
---HTML5 Shiv的printshiv版本必须改变打印样式和整个DOM进行打印。对于复杂的网站和/或大量的打印样式，这可能会导致性能和/或样式问题。可能的解决方案可能是HTML5 Shiv 的[htc-branch]（https://github.com/aFarkas/html5shiv/tree/iepp-htc），它使用另一种技术来实现Internet Explorer 6-8的打印样式。
-
-###其他的HTML5元素项目呢？
-
-- 该项目的原始概念和社区合作故事在[HTML5 Shiv的历史]中描述（http://paulirish.com/2011/the-history-of-the-html5-shiv/）。
-- Jon Neal 撰写的[IEPP]（https://code.google.com/p/ie-print-protector）解决了原始`html5shiv`的打印错误。它被合并到`html5shiv`中。
--  ** Shimprove **，2010年4月，修补cloneNode和createElement后来被合并到`html5shiv`
--  JD Barlett于2010年8月推出的** innerShiv **，在DOM中动态添加新的HTML5元素。[jQuery添加支持]（http://blog.jquery.com/2011/11/03/jquery-1-7-released/），使innerShiv冗余和`html5shiv`解决相同的问题，所以该项目是完成。
--  Google代码中的** html5shim **和** html5shiv **网站由Remy Sharp维护，并且是这个`html5shiv`项目的相同分发点。
--  ** Modernizr **由与`html5shiv`相同的人开发，可以包含在modernizr.com创建的任何定制版本中的最新版本
-- 这个`html5shiv`回购现在包含了上述库追求的所有边缘案例的测试，并且在开发和生产中都经过了广泛的测试。 
-
-[html5shiv的详细更新日志]（https://github.com/aFarkas/html5shiv/wiki）可用。
-
-###为什么叫做* shiv *？
-从[John Resig]（https://github.com/jeresig）
-这个术语** shiv ** [originate]（http://ejohn.org/blog/html5-shiv/），被认为是使用用于俚语的意思，*用作刀形武器的尖锐物体，用于Internet Explorer。说实话，John可能打算使用[shim]（http://en.wikipedia.org/wiki/Shim_ ( computing ））这个词，它在计算中意味着*应用程序兼容性解决方法*。大多数熟悉Internet Explorer的开发人员不是纠正错误，而是欣赏视觉图像。那孩子呢，是[词源]（https://en.wikipedia.org/wiki/Etymology）。
+The term shiv originates from John Resig, who was thought to have used the word for its slang meaning, a sharp object used as a knife-like weapon, intended for Internet Explorer. Truth be known, John probably intended to use the word [shim](http://en.wikipedia.org/wiki/Shim_(computing\)), which in computing means an application compatibility workaround. Rather than correct his mispelling, most developers familiar with Internet Explorer appreciated the visual imagery. And that, kids, is etymology.
